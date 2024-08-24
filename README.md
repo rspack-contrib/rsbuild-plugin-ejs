@@ -1,6 +1,6 @@
 # rsbuild-plugin-ejs
 
-rsbuild-plugin-ejs is a Rsbuild plugin to do something.
+An Rsbuild plugin to provide support for the [EJS](https://github.com/mde/ejs) template engine.
 
 <p>
   <a href="https://npmjs.com/package/rsbuild-plugin-ejs">
@@ -28,19 +28,54 @@ export default {
 };
 ```
 
+### Using EJS Templates
+
+After the plugin registration is completed, Rsbuild will automatically parse template files with the `.ejs` extension and compile them using the EJS template engine.
+
+For example, first create a `src/index.ejs` file, and point to that file using `html.template`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    template: "./src/index.ejs",
+  },
+};
+```
+
+Then, you can use EJS syntax in the `index.ejs` template:
+
+```html
+<!-- Input -->
+Hello <%= foo %>!
+
+<!-- Output -->
+Hello Rsbuild!
+```
+
+Refer to the [EJS documentation](https://github.com/mde/ejs) for more details.
+
 ## Options
 
-### foo
+### ejsOptions
 
-Some description.
+Used to set the compilation options for EJS. For detailed options, please refer to the [EJS API Reference](https://ejs.co/#docs).
 
-- Type: `string`
-- Default: `undefined`
-- Example:
+- **Type:** `import('ejs').Options`
+- **Default:**
 
-```js
+```ts
+const defaultOptions = {
+  filename,
+};
+```
+
+- **Example:**
+
+```ts
 pluginEjs({
-  foo: "bar",
+  ejsOptions: {
+    delimiter: "|",
+  },
 });
 ```
 
