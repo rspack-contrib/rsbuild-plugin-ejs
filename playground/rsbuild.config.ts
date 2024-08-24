@@ -1,6 +1,11 @@
-import { defineConfig } from '@rsbuild/core';
 import { pluginEjs } from '../src';
 
-export default defineConfig({
+export default {
   plugins: [pluginEjs()],
-});
+  html: {
+    template: './src/index.ejs',
+    templateParameters: {
+      foo: 'Rsbuild',
+    },
+  },
+};
