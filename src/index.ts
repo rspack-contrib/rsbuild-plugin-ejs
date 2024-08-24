@@ -1,5 +1,8 @@
+import { createRequire } from 'node:module';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options as EjsOptions } from 'ejs';
+
+const require = createRequire(import.meta.url);
 
 export type PluginEjsOptions = {
   /**
