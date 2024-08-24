@@ -1,1 +1,1 @@
-window.test = 1;
+document.querySelector('#root').innerHTML = `<p id="test">Hello Rsbuild!</p>`;
