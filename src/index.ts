@@ -1,4 +1,5 @@
 import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options as EjsOptions } from 'ejs';
 
@@ -23,9 +24,11 @@ export const pluginEjs = (options: PluginEjsOptions = {}): RsbuildPlugin => ({
         filename: resourcePath,
         ...options.ejsOptions,
       };
+      const ejsPath = require.resolve('ejs');
+      const ejsFileUrl = pathToFileURL(ejsPath);
 
       return `
-const ejs = require('${require.resolve('ejs')}');
+const ejs = require('${ejsFileUrl}');
 const ejsOptions = ${JSON.stringify(ejsOptions)};
 
 export default function template(templateParams) {
