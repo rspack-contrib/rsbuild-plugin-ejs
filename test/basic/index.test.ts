@@ -1,14 +1,19 @@
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { expect, test } from '@rstest/playwright';
-import { createRsbuild, loadConfig } from '@rsbuild/core';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { createRsbuild } from '@rsbuild/core';
+import { pluginEjs } from '../../dist';
 
 test('should allow to use .ejs template file', async ({ page }) => {
   const rsbuild = await createRsbuild({
-    cwd: __dirname,
-    rsbuildConfig: (await loadConfig({ cwd: __dirname })).content,
+    cwd: import.meta.dirname,
+    rsbuildConfig: {
+      plugins: [pluginEjs()],
+      html: {
+        template: './src/index.ejs',
+        templateParameters: {
+          foo: 'Rsbuild',
+        },
+      },
+    },
   });
 
   await rsbuild.build();
